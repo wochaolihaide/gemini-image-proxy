@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini 图像生成器</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">Gemini 图像生成器</h1>
+            <p class="subtitle">基于 Gemini 2.0 Flash 的智能图像生成服务</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Image Upload Section -->
+            <section class="upload-section">
+                <h2>上传参考图片</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-placeholder">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <p>拖拽图片到此处或点击上传</p>
+                        <p class="upload-hint">支持 JPG、PNG、GIF 格式，最大 10MB</p>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                </div>
+                <div class="uploaded-images" id="uploadedImages"></div>
+            </section>
+
+            <!-- Prompts Section -->
+            <section class="prompts-section">
+                <div class="section-header">
+                    <h2>提示词设置</h2>
+                    <button class="btn-secondary" id="addPromptBtn">+ 添加提示词</button>
+                </div>
+                <div class="prompts-container" id="promptsContainer">
+                    <!-- 默认提示词输入框 -->
+                    <div class="prompt-item">
+                        <div class="prompt-header">
+                            <span class="prompt-number">1</span>
+                            <button class="btn-remove" onclick="removePrompt(this)">×</button>
+                        </div>
+                        <textarea class="prompt-input" placeholder="请输入图像生成提示词..."></textarea>
+                        <div class="prompt-results" style="display: none;"></div>
+                    </div>
+                    <div class="prompt-item">
+                        <div class="prompt-header">
+                            <span class="prompt-number">2</span>
+                            <button class="btn-remove" onclick="removePrompt(this)">×</button>
+                        </div>
+                        <textarea class="prompt-input" placeholder="请输入图像生成提示词..."></textarea>
+                        <div class="prompt-results" style="display: none;"></div>
+                    </div>
+                    <div class="prompt-item">
+                        <div class="prompt-header">
+                            <span class="prompt-number">3</span>
+                            <button class="btn-remove" onclick="removePrompt(this)">×</button>
+                        </div>
+                        <textarea class="prompt-input" placeholder="请输入图像生成提示词..."></textarea>
+                        <div class="prompt-results" style="display: none;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Generation Settings -->
+            <section class="settings-section">
+                <h2>生成设置</h2>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="imageCount">每个提示词生成图片数量</label>
+                        <select id="imageCount" class="setting-select">
+                            <option value="1">1 张</option>
+                            <option value="2">2 张</option>
+                            <option value="3">3 张</option>
+                            <option value="4">4 张</option>
+                            <option value="5">5 张</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Generate Button -->
+            <div class="generate-section">
+                <button class="btn-primary" id="generateBtn">
+                    <span class="btn-text">开始生成</span>
+                    <div class="btn-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>生成中...</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-header">
+                    <h3>生成进度</h3>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-info">
+                    <span id="progressStatus">准备中...</span>
+                    <span id="timeRemaining"></span>
+                </div>
+            </section>
+
+            <!-- Rate Limit Info -->
+            <div class="rate-limit-info" id="rateLimitInfo" style="display: none;">
+                <p>⚠️ 请求频率限制：每分钟最多 10 次请求</p>
+                <p>剩余时间：<span id="rateLimitTimer"></span></p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Gemini 图像生成器. 基于 Gemini 2.0 Flash 技术</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
